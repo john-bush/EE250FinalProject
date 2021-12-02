@@ -1,0 +1,54 @@
+# Team: Pilar Luiz & John Bush 
+# GitHub repo: https://github.com/john-bush/EE250FinalProject
+
+import paho.mqtt.client as mqtt
+import time
+import sys
+sys.path.append('../../Software/Python/')
+# This append is to support importing the LCD library.
+sys.path.append('../../Software/Python/grove_rgb_lcd')
+
+import grovepi
+from grove_rgb_lcd import *
+
+# grovepi.pinMode(8,"INPUT")
+# grovepi.pinMode(7,"OUTPUT")
+
+# setRGB(100, 70, 70)
+# textCommand(0x01)
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+
+    #subscribe to topics of interest here
+    client.subscribe("dreamteam/motor")
+    client.message_callback_add("dreamteam/motor", on_motor)
+
+
+#Default message callback. Please use custom callbacks.
+def on_message(client, userdata, msg):
+    print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+
+def on_motor(client, userdata, message):
+    print("Motor activated")
+    s = str(message.payload, 'utf-8')
+    if s == "ON":
+        # TODO: move the motor
+        client.publish("dreamteam/motor", "OFF")
+
+
+if __name__ == '__main__':
+    #this section is covered in publisher_and_subscriber_example.py
+    client = mqtt.Client()
+    client.on_message = on_message
+    client.on_connect = on_connect
+    client.connect(host="lab.ee250io.tk", port=1883, keepalive=60)
+    client.loop_start()
+
+    while True:
+        # if the read values, publish
+        distance = grovepi.ultrasonicRead(4)
+        client.publish("dreamteam/ultrasonicRanger", distance)
+        time.sleep(1)
+            
+
