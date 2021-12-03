@@ -27,7 +27,7 @@ def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
 
 def on_motor(client, userdata, message):
-    print("Motor activated")
+    print("Motor: " + str(message.payload, "utf-8"))
     s = str(message.payload, 'utf-8')
     if s == "OPEN":
         

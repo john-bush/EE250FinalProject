@@ -1,7 +1,7 @@
 # Team: Pilar Luiz & John Bush
 # GitHub repo: https://github.com/john-bush/EE250FinalProject
 
-from sys import pycache_prefix
+#from sys import pycache_prefix
 import paho.mqtt.client as mqtt
 import time
 
@@ -24,8 +24,7 @@ def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
 
 def on_ultrasonic(client, userdata, message):
-    print("VM: " + str(message.payload, 'utf-8') + "cm")
-    print("Distance: " + int(message.payload))
+    print("Distance: " + str(message.payload, 'utf-8') + "cm")
     global bird_waiting
     if int(message.payload) < threshold and bird_waiting is False:
         # Feed the bird
