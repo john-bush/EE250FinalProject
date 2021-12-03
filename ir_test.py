@@ -1,7 +1,7 @@
 import RPi.GPIO as IO
 from time import sleep
 
-P_IR = 17
+P_IR = 11
 
 IO.setmode(IO.BOARD)
 IO.setup(P_IR,IO.IN)
