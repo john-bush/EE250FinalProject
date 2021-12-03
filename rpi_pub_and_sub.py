@@ -2,20 +2,17 @@
 # GitHub repo: https://github.com/john-bush/EE250FinalProject
 
 import paho.mqtt.client as mqtt
+from gpiozero import Servo
 import time
 import sys
 sys.path.append('../../Software/Python/')
 # This append is to support importing the LCD library.
-sys.path.append('../../Software/Python/grove_rgb_lcd')
+#sys.path.append('../../Software/Python/grove_rgb_lcd')
 
 import grovepi
-from grove_rgb_lcd import *
 
-# grovepi.pinMode(8,"INPUT")
-# grovepi.pinMode(7,"OUTPUT")
+servo = Servo(21)
 
-# setRGB(100, 70, 70)
-# textCommand(0x01)
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
@@ -32,9 +29,13 @@ def on_message(client, userdata, msg):
 def on_motor(client, userdata, message):
     print("Motor activated")
     s = str(message.payload, 'utf-8')
-    if s == "ON":
-        # TODO: move the motor
-        client.publish("dreamteam/motor", "OFF")
+    if s == "OPEN":
+        
+        servo.mid()
+        time.sleep(.2)
+        servo.min()
+
+        client.publish("dreamteam/motor", "CLOSE")
 
 
 if __name__ == '__main__':

@@ -9,6 +9,9 @@ import time
 # Don't want to continuously distirbute food to a bird until it leaves and returns. 
 bird_waiting = False
 
+# Detection Distance
+threshold = 10
+
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
 
@@ -24,11 +27,11 @@ def on_ultrasonic(client, userdata, message):
     print("VM: " + str(message.payload, 'utf-8') + "cm")
     print("Distance: " + int(message.payload))
     global bird_waiting
-    if int(message.payload) < 100 and bird_waiting is False:
+    if int(message.payload) < threshold and bird_waiting is False:
         # Feed the bird
         bird_waiting = True
-        client.publish("dreamteam/motor", "ON")
-    elif int(message.payload) >= 100:
+        client.publish("dreamteam/motor", "OPEN")
+    elif int(message.payload) >= threshold:
         bird_waiting = False
 
 
