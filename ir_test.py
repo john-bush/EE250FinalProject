@@ -10,8 +10,8 @@ while (1):
     sleep(2)
 
     if (IO.input(P_IR) == True):
-        print("Far.")
+        print(str(IO.input(P_IR)))
     
     if (IO.input(P_IR) == False):
-        print ("Close.")
+        print (str(IO.input(P_IR)))
 
