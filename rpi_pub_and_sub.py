@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     while True:
         # if the read values, publish
-        distance = grovepi.ultrasonicRead(4)
+        distance = grovepi.ultrasonicRead(7)
         client.publish("dreamteam/ultrasonicRanger", distance)
         time.sleep(1)
             
