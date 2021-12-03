@@ -1,6 +1,7 @@
 import RPi.GPIO as IO
 from time import sleep
 
+IO.setmode(IO.BOARD)
 IO.setup(14,IO.IN)
 
 while (1):
