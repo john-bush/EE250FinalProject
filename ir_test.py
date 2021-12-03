@@ -1,15 +1,17 @@
 import RPi.GPIO as IO
 from time import sleep
 
+P_IR = 17
+
 IO.setmode(IO.BOARD)
-IO.setup(14,IO.IN)
+IO.setup(P_IR,IO.IN)
 
 while (1):
     sleep(2)
 
-    if (IO.input(14) == True):
+    if (IO.input(P_IR) == True):
         print("Far.")
     
-    if (IO.input(14) == False):
+    if (IO.input(P_IR) == False):
         print ("Close.")
 
